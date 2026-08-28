@@ -1,0 +1,134 @@
+=== backend audit - 20260828235329 UTC ===
+repo:   swipswaps/gods-eye-ocr
+branch: main
+HEAD:   3e81c1b36143495fd171db3322cc93b25cf7039d
+root:   /home/owner/Documents/88a91d94-caa0-4522-a5ed-781d1bc84f0b/repo
+
+=== 1. TOOLCHAIN ===
+Docker version 28.4.0, build d8eb465
+Docker Compose version v2.39.4
+Python 3.14.6
+
+=== 2. COMPOSE FILE VALIDATION ===
+[PASS] compose_config - docker-compose.yml parses
+name: repo
+services:
+  backend:
+    build:
+      context: /home/owner/Documents/88a91d94-caa0-4522-a5ed-781d1bc84f0b/repo/backend
+      dockerfile: Dockerfile
+    environment:
+      DB_PATH: /app/data/app.db
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8000/api/health
+      timeout: 5s
+      interval: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8000
+        published: "8000"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /home/owner/Documents/88a91d94-caa0-4522-a5ed-781d1bc84f0b/repo/backend/data
+        target: /app/data
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: repo_default
+
+=== 3. BUILD AND START ===
+unable to get image 'repo-backend': Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[FAIL] compose_up - exit=1
+
+--- docker compose ps ---
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+
+=== 4. HEALTH WAIT (max 90s, non-interactive - Rule #51) ===
+attempt 01: HTTP 000 
+attempt 02: HTTP 000 
+attempt 03: HTTP 000 
+attempt 04: HTTP 000 
+attempt 05: HTTP 000 
+attempt 06: HTTP 000 
+attempt 07: HTTP 000 
+attempt 08: HTTP 000 
+attempt 09: HTTP 000 
+attempt 10: HTTP 000 
+attempt 11: HTTP 000 
+attempt 12: HTTP 000 
+attempt 13: HTTP 000 
+attempt 14: HTTP 000 
+attempt 15: HTTP 000 
+attempt 16: HTTP 000 
+attempt 17: HTTP 000 
+attempt 18: HTTP 000 
+attempt 19: HTTP 000 
+attempt 20: HTTP 000 
+attempt 21: HTTP 000 
+attempt 22: HTTP 000 
+attempt 23: HTTP 000 
+attempt 24: HTTP 000 
+attempt 25: HTTP 000 
+attempt 26: HTTP 000 
+attempt 27: HTTP 000 
+attempt 28: HTTP 000 
+attempt 29: HTTP 000 
+attempt 30: HTTP 000 
+attempt 31: HTTP 000 
+attempt 32: HTTP 000 
+attempt 33: HTTP 000 
+attempt 34: HTTP 000 
+attempt 35: HTTP 000 
+attempt 36: HTTP 000 
+attempt 37: HTTP 000 
+attempt 38: HTTP 000 
+attempt 39: HTTP 000 
+attempt 40: HTTP 000 
+attempt 41: HTTP 000 
+attempt 42: HTTP 000 
+attempt 43: HTTP 000 
+attempt 44: HTTP 000 
+attempt 45: HTTP 000 
+[FAIL] health_endpoint - never returned 200 within 90s
+
+=== 5. CONTAINER LOGS (last 60 lines) ===
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+
+=== 6. FUNCTIONAL ROUND TRIP ===
+[SKIP] round_trip - backend not healthy - not attempted
+
+=== 7. SINGLE DATABASE FILE CHECK ===
+This is the regression guard for the split-brain bug: the ORM and the
+raw sqlite3 connection must open the SAME file. Exactly one *.db is
+expected, and no filename containing a query string.
+
+[SKIP] single_db_file - container not running
+
+=== 8. SQLITE-VEC EXTENSION AND SCHEMA ===
+[SKIP] sqlite_vec - container not running
+
+=== 9. CORS PREFLIGHT FROM THE PAGES ORIGIN ===
+[SKIP] cors - backend not healthy
+
+=== 10. NOTE ON THE LIVE SITE ===
+The published SPA is served over HTTPS from github.io and points at
+http://localhost:8000 by default. A browser will block that mixed-content
+request, so "Backend Unreachable" on the hosted page is expected even
+when this audit passes. Run the frontend locally (npm run dev) to talk to
+this backend, or publish the backend behind HTTPS and rebuild with
+VITE_BACKEND_URL set to that origin.
+
+=== AUDIT SUMMARY ===
+PASS: 1   FAIL: 2   SKIP: 4
+=== END AUDIT ===
