@@ -2,28 +2,39 @@
 - hosts: all
   become: yes
   tasks:
-    - name: Install Docker
-      apt:
-        name: docker.io
+    - name: Install Docker engine and compose plugin
+      ansible.builtin.apt:
+        name:
+          - docker.io
+          - docker-compose-plugin
         state: present
         update_cache: yes
-    - name: Install Docker Compose
-      get_url:
-        url: "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)"
-        dest: /usr/local/bin/docker-compose
-        mode: '0755'
+
+    - name: Ensure Docker is running
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+
     - name: Create app directory
-      file:
+      ansible.builtin.file:
         path: /opt/gods-eye
         state: directory
-    - name: Copy compose and backend files
-      synchronize:
+        mode: '0755'
+
+    - name: Copy docker-compose.yml
+      ansible.builtin.copy:
         src: ../docker-compose.yml
-        dest: /opt/gods-eye/
-      synchronize:
+        dest: /opt/gods-eye/docker-compose.yml
+        mode: '0644'
+
+    - name: Copy backend source
+      ansible.posix.synchronize:
         src: ../backend/
         dest: /opt/gods-eye/backend/
-    - name: Run docker-compose
-      docker_compose:
+        delete: no
+
+    - name: Bring the stack up
+      community.docker.docker_compose_v2:
         project_src: /opt/gods-eye
         state: present

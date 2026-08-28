@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, Box, Alert, Paper, Typography } from '@mui/material';
+import { Button, TextField, Alert, Paper, Typography } from '@mui/material';
 import { ingestDocument } from '../services/api';
 import useBackendStore from '../stores/backendStore';
 
@@ -20,8 +20,8 @@ const IngestForm: React.FC = () => {
       setResult(`Ingested with ID: ${resp.data.id}`);
       setTitle('');
       setContent('');
-    } catch (err: any) {
-      setResult(`Error: ${err.message}`);
+    } catch (err) {
+      setResult(`Error: ${err instanceof Error ? err.message : String(err)}`);
     } finally {
       setLoading(false);
     }
@@ -53,7 +53,11 @@ const IngestForm: React.FC = () => {
           Ingest
         </Button>
         {loading && <span>Loading...</span>}
-        {result && <Alert severity={result.startsWith('Error') ? 'error' : 'success'} sx={{ mt: 1 }}>{result}</Alert>}
+        {result && (
+          <Alert severity={result.startsWith('Error') ? 'error' : 'success'} sx={{ mt: 1 }}>
+            {result}
+          </Alert>
+        )}
       </form>
     </Paper>
   );

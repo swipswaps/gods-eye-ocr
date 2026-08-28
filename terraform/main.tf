@@ -1,15 +1,10 @@
 terraform {
   required_providers {
     digitalocean = {
-      source = "digitalocean/digitalocean"
+      source  = "digitalocean/digitalocean"
       version = "~> 2.0"
     }
   }
-}
-
-variable "do_token" {
-  description = "DigitalOcean API token"
-  sensitive   = true
 }
 
 provider "digitalocean" {
@@ -17,10 +12,10 @@ provider "digitalocean" {
 }
 
 resource "digitalocean_droplet" "backend" {
-  image  = "ubuntu-22-04-x64"
-  name   = "gods-eye-backend"
-  region = "nyc1"
-  size   = "s-1vcpu-1gb"
+  image    = "ubuntu-22-04-x64"
+  name     = "gods-eye-backend"
+  region   = "nyc1"
+  size     = "s-1vcpu-1gb"
   ssh_keys = [var.ssh_fingerprint]
 }
 

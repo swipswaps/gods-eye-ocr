@@ -11,8 +11,12 @@ export const checkBackend = async (): Promise<'ok' | 'unreachable'> => {
   }
 };
 
-export const ingestDocument = async (title: string, content: string) => {
-  return axios.post(`${BACKEND_URL}/api/ingest`, { title, content });
+export const ingestDocument = async (
+  title: string,
+  content: string,
+  metadata?: Record<string, unknown>
+) => {
+  return axios.post(`${BACKEND_URL}/api/ingest`, { title, content, metadata });
 };
 
 export const queryRAG = async (query: string, topK: number = 5) => {

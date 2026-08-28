@@ -1,11 +1,14 @@
-from pydantic import BaseModel
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
+
+from pydantic import BaseModel, Field
+
 
 class IngestRequest(BaseModel):
-    title: str
-    content: str
+    title: str = Field(min_length=1)
+    content: str = Field(min_length=1)
     metadata: Optional[Dict[str, Any]] = None
 
+
 class QueryRequest(BaseModel):
-    query: str
+    query: str = Field(min_length=1)
     top_k: Optional[int] = 5

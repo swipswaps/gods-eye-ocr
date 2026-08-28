@@ -1,11 +1,19 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = "sqlite:///./app.db?enable_load_extension=1"
+    # Single source of truth for the database location. Both the SQLAlchemy
+    # engine and the raw sqlite3 connections used for sqlite-vec derive from
+    # this one value, so they can never diverge.
+    DB_PATH: str = "./data/app.db"
     OPENAI_API_KEY: str = ""
     VECTOR_DIM: int = 1536
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    @property
+    def DATABASE_URL(self) -> str:
+        return f"sqlite:///{self.DB_PATH}"
+
 
 settings = Settings()

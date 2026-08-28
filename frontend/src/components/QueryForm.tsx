@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Button, TextField, Box, Alert, Paper, Typography, List, ListItem, ListItemText } from '@mui/material';
+import {
+  Button,
+  TextField,
+  Alert,
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+} from '@mui/material';
 import { queryRAG } from '../services/api';
 import useBackendStore from '../stores/backendStore';
 
@@ -25,8 +34,8 @@ const QueryForm: React.FC = () => {
     try {
       const resp = await queryRAG(query);
       setResults(resp.data.results);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
     } finally {
       setLoading(false);
     }
@@ -48,12 +57,19 @@ const QueryForm: React.FC = () => {
           Search
         </Button>
         {loading && <span>Loading...</span>}
-        {error && <Alert severity="error" sx={{ mt: 1 }}>{error}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mt: 1 }}>
+            {error}
+          </Alert>
+        )}
         {results.length > 0 && (
           <List>
             {results.map((r) => (
               <ListItem key={r.id} divider>
-                <ListItemText primary={r.title} secondary={`${r.content.substring(0, 150)}... (distance: ${r.distance.toFixed(4)})`} />
+                <ListItemText
+                  primary={r.title}
+                  secondary={`${r.content.substring(0, 150)}... (distance: ${r.distance.toFixed(4)})`}
+                />
               </ListItem>
             ))}
           </List>

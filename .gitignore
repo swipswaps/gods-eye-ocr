@@ -1,0 +1,23 @@
+# node
+node_modules/
+frontend/dist/
+frontend/node_modules/
+npm-debug.log*
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# data / secrets
+backend/data/*.db
+backend/data/*.db-*
+.env
+*.env
+!frontend/.env.example
+
+# terraform
+.terraform/
+*.tfstate
+*.tfstate.*

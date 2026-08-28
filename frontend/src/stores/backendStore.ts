@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type BackendStatus = 'ok' | 'unreachable' | 'unknown';
+export type BackendStatus = 'ok' | 'unreachable' | 'unknown';
 
 interface BackendState {
   status: BackendStatus;

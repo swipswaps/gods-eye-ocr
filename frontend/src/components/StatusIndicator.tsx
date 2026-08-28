@@ -1,6 +1,6 @@
 import React from 'react';
 import { Chip } from '@mui/material';
-import { BackendStatus } from '../stores/backendStore';
+import type { BackendStatus } from '../stores/backendStore';
 
 interface Props {
   status: BackendStatus;
@@ -8,7 +8,12 @@ interface Props {
 
 const StatusIndicator: React.FC<Props> = ({ status }) => {
   const color = status === 'ok' ? 'success' : status === 'unreachable' ? 'error' : 'default';
-  const label = status === 'ok' ? 'Backend Online' : status === 'unreachable' ? 'Backend Unreachable' : 'Checking...';
+  const label =
+    status === 'ok'
+      ? 'Backend Online'
+      : status === 'unreachable'
+        ? 'Backend Unreachable'
+        : 'Checking...';
   return <Chip label={`Status: ${label}`} color={color} />;
 };
 
