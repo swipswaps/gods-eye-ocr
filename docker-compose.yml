@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app.db:/app/app.db
+      - ./backend/.env:/app/.env
+    environment:
+      - DATABASE_URL=sqlite:///./app.db?enable_load_extension=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3

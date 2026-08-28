@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+    - name: Install Docker Compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)"
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+    - name: Create app directory
+      file:
+        path: /opt/gods-eye
+        state: directory
+    - name: Copy compose and backend files
+      synchronize:
+        src: ../docker-compose.yml
+        dest: /opt/gods-eye/
+      synchronize:
+        src: ../backend/
+        dest: /opt/gods-eye/backend/
+    - name: Run docker-compose
+      docker_compose:
+        project_src: /opt/gods-eye
+        state: present
