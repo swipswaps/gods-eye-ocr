@@ -21,3 +21,9 @@ backend/data/*.db-*
 .terraform/
 *.tfstate
 *.tfstate.*
+
+# Rule #21 timestamped backups are working files, not repo content
+*.bak.*
+*.backup.*
+.env.local
+frontend/.env.local
