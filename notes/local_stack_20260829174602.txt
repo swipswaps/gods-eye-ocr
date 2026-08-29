@@ -1,0 +1,187 @@
+=== local stack verification - 20260829174602 UTC ===
+root: /home/owner/Documents/88a91d94-caa0-4522-a5ed-781d1bc84f0b/repo   branch: main
+
+=== 1. BACKEND UP ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 593B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile:
+#2 transferring dockerfile: 503B 0.1s done
+#2 DONE 1.8s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 16.9s
+
+#4 [internal] load .dockerignore
+#4 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 2B 0.0s done
+#4 DONE 2.5s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [1/6] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#6 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context:
+#5 transferring context: 1.46kB 0.0s done
+#5 DONE 6.7s
+
+#7 [2/6] WORKDIR /app
+#7 CACHED
+
+#8 [3/6] RUN apt-get update && apt-get install -y --no-install-recommends curl &&     rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [4/6] COPY requirements.txt .
+#9 CACHED
+
+#10 [5/6] RUN pip install --no-cache-dir -r requirements.txt
+#10 49.35 Collecting fastapi==0.115.6 (from -r requirements.txt (line 1))
+#10 49.73   Downloading fastapi-0.115.6-py3-none-any.whl.metadata (27 kB)
+#10 50.45 Collecting uvicorn==0.34.0 (from uvicorn[standard]==0.34.0->-r requirements.txt (line 2))
+#10 50.49   Downloading uvicorn-0.34.0-py3-none-any.whl.metadata (6.5 kB)
+#10 56.73 Collecting sqlalchemy==2.0.36 (from -r requirements.txt (line 3))
+#10 56.77   Downloading SQLAlchemy-2.0.36-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.7 kB)
+#10 57.38 Collecting alembic==1.14.0 (from -r requirements.txt (line 4))
+#10 57.42   Downloading alembic-1.14.0-py3-none-any.whl.metadata (7.4 kB)
+#10 59.77 Collecting pydantic==2.10.4 (from -r requirements.txt (line 5))
+#10 59.81   Downloading pydantic-2.10.4-py3-none-any.whl.metadata (29 kB)
+#10 60.08 Collecting pydantic-settings==2.6.1 (from -r requirements.txt (line 6))
+#10 60.12   Downloading pydantic_settings-2.6.1-py3-none-any.whl.metadata (3.5 kB)
+#10 60.40 Collecting python-dotenv==1.0.1 (from -r requirements.txt (line 7))
+#10 60.44   Downloading python_dotenv-1.0.1-py3-none-any.whl.metadata (23 kB)
+#10 60.80 Collecting httpx==0.28.1 (from -r requirements.txt (line 8))
+#10 60.83   Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+#10 62.74 Collecting langchain==0.3.3 (from -r requirements.txt (line 9))
+#10 62.78   Downloading langchain-0.3.3-py3-none-any.whl.metadata (7.1 kB)
+#10 63.25 Collecting langchain-community==0.3.3 (from -r requirements.txt (line 10))
+#10 63.30   Downloading langchain_community-0.3.3-py3-none-any.whl.metadata (2.8 kB)
+#10 63.88 Collecting langchain-openai==0.2.14 (from -r requirements.txt (line 11))
+#10 63.92   Downloading langchain_openai-0.2.14-py3-none-any.whl.metadata (2.7 kB)
+#10 64.32 Collecting sqlite-vec==0.1.9 (from -r requirements.txt (line 12))
+#10 64.36   Downloading sqlite_vec-0.1.9-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux1_x86_64.whl.metadata (198 bytes)
+#10 64.57 Collecting structlog==24.4.0 (from -r requirements.txt (line 13))
+#10 64.61   Downloading structlog-24.4.0-py3-none-any.whl.metadata (7.3 kB)
+#10 64.85 Collecting python-multipart==0.0.20 (from -r requirements.txt (line 14))
+#10 64.89   Downloading python_multipart-0.0.20-py3-none-any.whl.metadata (1.8 kB)
+#10 65.60 Collecting starlette<0.42.0,>=0.40.0 (from fastapi==0.115.6->-r requirements.txt (line 1))
+#10 65.64   Downloading starlette-0.41.3-py3-none-any.whl.metadata (6.0 kB)
+#10 66.44 Collecting typing-extensions>=4.8.0 (from fastapi==0.115.6->-r requirements.txt (line 1))
+#10 66.48   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#10 66.82 Collecting click>=7.0 (from uvicorn==0.34.0->uvicorn[standard]==0.34.0->-r requirements.txt (line 2))
+#10 66.86   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+#10 66.98 Collecting h11>=0.8 (from uvicorn==0.34.0->uvicorn[standard]==0.34.0->-r requirements.txt (line 2))
+#10 67.02   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#10 70.18 Collecting greenlet!=0.4.17 (from sqlalchemy==2.0.36->-r requirements.txt (line 3))
+#10 70.22   Downloading greenlet-3.5.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+#10 70.94 Collecting Mako (from alembic==1.14.0->-r requirements.txt (line 4))
+#10 71.22   Downloading mako-1.4.1-py3-none-any.whl.metadata (2.9 kB)
+#10 71.47 Collecting annotated-types>=0.6.0 (from pydantic==2.10.4->-r requirements.txt (line 5))
+#10 71.51   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#10 86.06 Collecting pydantic-core==2.27.2 (from pydantic==2.10.4->-r requirements.txt (line 5))
+#10 86.10   Downloading pydantic_core-2.27.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+#10 87.17 Collecting anyio (from httpx==0.28.1->-r requirements.txt (line 8))
+#10 87.21   Downloading anyio-4.14.2-py3-none-any.whl.metadata (4.6 kB)
+#10 87.81 Collecting certifi (from httpx==0.28.1->-r requirements.txt (line 8))
+#10 87.85   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+#10 88.18 Collecting httpcore==1.* (from httpx==0.28.1->-r requirements.txt (line 8))
+#10 88.22   Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+#10 88.46 Collecting idna (from httpx==0.28.1->-r requirements.txt (line 8))
+#10 88.50   Downloading idna-3.19-py3-none-any.whl.metadata (9.2 kB)
+#10 89.21 Collecting PyYAML>=5.3 (from langchain==0.3.3->-r requirements.txt (line 9))
+#10 89.25   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+#10 100.6 Collecting aiohttp<4.0.0,>=3.8.3 (from langchain==0.3.3->-r requirements.txt (line 9))
+#10 100.6   Downloading aiohttp-3.14.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.3 kB)
+#10 102.0 Collecting langchain-core<0.4.0,>=0.3.10 (from langchain==0.3.3->-r requirements.txt (line 9))
+#10 102.0   Downloading langchain_core-0.3.86-py3-none-any.whl.metadata (3.2 kB)
+#10 102.2 Collecting langchain-text-splitters<0.4.0,>=0.3.0 (from langchain==0.3.3->-r requirements.txt (line 9))
+#10 102.3   Downloading langchain_text_splitters-0.3.11-py3-none-any.whl.metadata (1.8 kB)
+#10 104.9 Collecting langsmith<0.2.0,>=0.1.17 (from langchain==0.3.3->-r requirements.txt (line 9))
+#10 104.9   Downloading langsmith-0.1.147-py3-none-any.whl.metadata (14 kB)
+#10 109.2 Collecting numpy<2.0.0,>=1.26.0 (from langchain==0.3.3->-r requirements.txt (line 9))
+#10 109.2   Downloading numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+#10 110.8 Collecting requests<3,>=2 (from langchain==0.3.3->-r requirements.txt (line 9))
+#10 110.8   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+#10 111.1 Collecting tenacity!=8.4.0,<9.0.0,>=8.1.0 (from langchain==0.3.3->-r requirements.txt (line 9))
+#10 111.2   Downloading tenacity-8.5.0-py3-none-any.whl.metadata (1.2 kB)
+#10 111.6 Collecting dataclasses-json<0.7,>=0.5.7 (from langchain-community==0.3.3->-r requirements.txt (line 10))
+#10 111.6   Downloading dataclasses_json-0.6.7-py3-none-any.whl.metadata (25 kB)
+#10 112.4 INFO: pip is looking at multiple versions of langchain-community to determine which version is compatible with other requirements. This could take a while.
+#10 112.5 ERROR: Cannot install -r requirements.txt (line 10) and langchain==0.3.3 because these package versions have conflicting dependencies.
+#10 112.5 
+#10 112.5 The conflict is caused by:
+#10 112.5     The user requested langchain==0.3.3
+#10 112.5     langchain-community 0.3.3 depends on langchain<0.4.0 and >=0.3.4
+#10 112.5 
+#10 112.5 To fix this you could try to:
+#10 112.5 1. loosen the range of package versions you've specified
+#10 112.5 2. remove package versions to allow pip to attempt to solve the dependency conflict
+#10 112.5 
+#10 113.8 
+#10 113.8 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#10 113.8 [notice] To update, run: pip install --upgrade pip
+#10 113.8 ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+#10 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+------
+ > [5/6] RUN pip install --no-cache-dir -r requirements.txt:
+112.5     langchain-community 0.3.3 depends on langchain<0.4.0 and >=0.3.4
+112.5 
+112.5 To fix this you could try to:
+112.5 1. loosen the range of package versions you've specified
+112.5 2. remove package versions to allow pip to attempt to solve the dependency conflict
+112.5 
+113.8 
+113.8 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+113.8 [notice] To update, run: pip install --upgrade pip
+113.8 ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+------
+Dockerfile:10
+
+--------------------
+
+   8 |     
+
+   9 |     COPY requirements.txt .
+
+  10 | >>> RUN pip install --no-cache-dir -r requirements.txt
+
+  11 |     
+
+  12 |     COPY . .
+
+--------------------
+
+failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+
+[FAIL] compose_up - build or start failed
+NAME      IMAGE     COMMAND   SERVICE   CREATED   STATUS    PORTS
+
+=== 2. HEALTH ===
+[SKIP] health - stack not started
+
+=== 3. INGEST + VECTOR QUERY ROUND TRIP ===
+[SKIP] round_trip - backend not healthy
+
+=== 4. SINGLE DATABASE FILE (split-brain regression guard) ===
+[SKIP] single_db_file - backend not running
+
+=== 5. SQLITE-VEC ===
+[SKIP] sqlite_vec - backend not running
+
+=== 6. CORS FROM THE DEV ORIGIN ===
+[SKIP] cors - backend not healthy
+
+=== 7. FRONTEND CONFIG ===
+[PASS] frontend_config - frontend/.env.local -> http://localhost:8000
+[PASS] frontend_deps - node_modules present
+
+=== SUMMARY ===
+PASS: 2   FAIL: 1   SKIP: 5
+=== END ===
