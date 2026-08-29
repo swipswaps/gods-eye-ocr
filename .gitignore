@@ -27,3 +27,4 @@ backend/data/*.db-*
 *.backup.*
 .env.local
 frontend/.env.local
+mutations.db
