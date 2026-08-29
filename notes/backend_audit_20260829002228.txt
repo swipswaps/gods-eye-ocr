@@ -1,0 +1,53 @@
+=== backend audit v2 - 20260829002228 UTC ===
+repo:   swipswaps/gods-eye-ocr
+branch: main
+HEAD:   bd55a3e3e5b1b7c9213cfafd62d34b39eb7720c9
+root:   /home/owner/Documents/88a91d94-caa0-4522-a5ed-781d1bc84f0b/repo
+
+=== 1. TOOLCHAIN ===
+Docker version 28.4.0, build d8eb465
+Docker Compose version v2.39.4
+Python 3.14.6
+docker daemon reachable: false
+daemon error: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+
+=== 2. DAEMON GATE ===
+[FAIL] docker_daemon - not reachable - start it with: sudo systemctl start docker
+
+=== 3. COMPOSE FILE VALIDATION ===
+[PASS] compose_config - docker-compose.yml parses
+
+=== 4. BUILD AND START ===
+[SKIP] compose_up - daemon down - not attempted
+
+=== 5. HEALTH WAIT ===
+[SKIP] health_endpoint - stack not started - health loop not attempted
+
+=== 6. CONTAINER LOGS (last 60 lines) ===
+(stack not started - no logs)
+
+=== 7. FUNCTIONAL ROUND TRIP ===
+[SKIP] round_trip - backend not healthy - not attempted
+
+=== 8. SINGLE DATABASE FILE CHECK ===
+Regression guard for the split-brain bug: the ORM and the raw sqlite3
+connection must open the SAME file.
+
+[SKIP] single_db_file - container not running
+
+=== 9. SQLITE-VEC EXTENSION AND SCHEMA ===
+[SKIP] sqlite_vec - container not running
+
+=== 10. CORS PREFLIGHT FROM THE PAGES ORIGIN ===
+[SKIP] cors - backend not healthy
+
+=== 11. NOTE ON THE LIVE SITE ===
+The published SPA is served over HTTPS from github.io and defaults to
+http://localhost:8000. Browsers block that mixed-content request, so
+"Backend Unreachable" on the hosted page is expected even when this
+audit is fully green. Use npm run dev locally, or serve the backend
+over HTTPS and rebuild with VITE_BACKEND_URL set to that origin.
+
+=== AUDIT SUMMARY ===
+PASS: 1   FAIL: 1   SKIP: 6
+=== END AUDIT ===
