@@ -10,3 +10,4 @@ langchain-openai==0.2.14
 sqlite-vec==0.1.9
 structlog==24.4.0
 python-multipart==0.0.20
+fastembed==0.8.0
