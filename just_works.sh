@@ -331,9 +331,10 @@ PY
         verdict SKIP "sqlite_vec" "backend not running"
     else
         $COMPOSE exec -T backend python -c "
-import sqlite3, os
+import sqlite3, os, sqlite_vec
 p = os.environ.get('DB_PATH', '/app/data/app.db')
 c = sqlite3.connect(p)
+c.enable_load_extension(True); sqlite_vec.load(c); c.enable_load_extension(False)
 names = [r[0] for r in c.execute(\"SELECT name FROM sqlite_master WHERE type IN ('table','view')\")]
 print('db path :', p)
 print('objects :', names)

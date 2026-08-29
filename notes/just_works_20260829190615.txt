@@ -1,0 +1,126 @@
+=== just_works - 20260829190615 UTC ===
+root: /home/owner/Documents/88a91d94-caa0-4522-a5ed-781d1bc84f0b/repo   branch: main
+
+=== 0. REQUIREMENTS STATE ===
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+sqlalchemy==2.0.36
+alembic==1.14.0
+pydantic==2.10.4
+pydantic-settings==2.6.1
+python-dotenv==1.0.1
+httpx==0.28.1
+langchain-openai==0.2.14
+sqlite-vec==0.1.9
+structlog==24.4.0
+python-multipart==0.0.20
+
+conflicting langchain pins remaining: 0
+
+=== 1. BUILD AND START ===
+#1 [internal] load local bake definitions
+#1 reading from stdin 609B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile:
+#2 transferring dockerfile: 503B 0.0s done
+#2 DONE 2.3s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 2.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 2B 0.0s done
+#4 DONE 0.4s
+
+#5 [1/6] FROM docker.io/library/python:3.12-slim@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 6.41MB 0.3s done
+#6 DONE 0.7s
+
+#7 [4/6] COPY requirements.txt .
+#7 CACHED
+
+#8 [2/6] WORKDIR /app
+#8 CACHED
+
+#9 [3/6] RUN apt-get update && apt-get install -y --no-install-recommends curl &&     rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [5/6] RUN pip install --no-cache-dir -r requirements.txt
+#10 CACHED
+
+#11 [6/6] COPY . .
+#11 DONE 31.3s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 7.4s done
+#12 writing image sha256:dc40588694b5a26d24dbbbc1a56d3a47680d0ab60f2c23a79294bd628201d206
+#12 writing image sha256:dc40588694b5a26d24dbbbc1a56d3a47680d0ab60f2c23a79294bd628201d206 0.3s done
+#12 naming to docker.io/library/gods-eye-ocr-backend
+#12 naming to docker.io/library/gods-eye-ocr-backend 0.6s done
+#12 DONE 10.6s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.1s
+ gods-eye-ocr-backend  Built
+ Network gods-eye-ocr_default  Creating
+ Network gods-eye-ocr_default  Created
+ Container gods-eye-ocr-backend-1  Creating
+ Container gods-eye-ocr-backend-1  Created
+ Container gods-eye-ocr-backend-1  Starting
+ Container gods-eye-ocr-backend-1  Started
+[PASS] compose_up - exit=0
+NAME                     IMAGE                  COMMAND                  SERVICE   CREATED          STATUS                            PORTS
+gods-eye-ocr-backend-1   gods-eye-ocr-backend   "uvicorn app.main:ap…"   backend   22 seconds ago   Up 4 seconds (health: starting)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+
+=== 2. HEALTH ===
+attempt 01: HTTP 000 {"status":"ok","database":"connected"}
+attempt 02: HTTP 000 {"status":"ok","database":"connected"}
+attempt 03: HTTP 000 {"status":"ok","database":"connected"}
+attempt 04: HTTP 000 {"status":"ok","database":"connected"}
+attempt 05: HTTP 000 {"status":"ok","database":"connected"}
+attempt 06: HTTP 000 {"status":"ok","database":"connected"}
+attempt 07: HTTP 000 {"status":"ok","database":"connected"}
+attempt 08: HTTP 200 {"status":"ok","database":"connected"}
+[PASS] health - HTTP 200 after 14s
+
+=== 3. INGEST + VECTOR QUERY ===
+{"id":3,"message":"Document stored"}
+{"id":4,"message":"Document stored"}
+{"results":[{"id":1,"title":"local doc A","content":"the parachute deploys at 900m","distance":15.792075157165527},{"id":3,"title":"local doc A","content":"the parachute deploys at 900m","distance":15.89381217956543},{"id":2,"title":"local doc B","content":"terrain LOD reduced to 512","distance":16.074491500854492},{"id":4,"title":"local doc B","content":"terrain LOD reduced to 512","distance":16.24309730529785}]}
+[PASS] round_trip - both documents ingested and retrieved by vector search
+
+=== 4. SINGLE DATABASE FILE (split-brain regression guard) ===
+total 6328
+drwxr-xr-x. 1 1000 1000      12 Aug 29 19:08 .
+drwxr-xr-x. 1 root root       6 Aug 29 18:27 ..
+-rw-r--r--. 1 root root 6475776 Aug 29 19:08 app.db
+
+.db files: 1 | query-string filenames: 0
+[PASS] single_db_file - exactly one app.db - ORM and raw sqlite3 agree
+
+=== 5. SQLITE-VEC ===
+db path : /app/data/app.db
+objects : ['documents', 'vec_documents', 'vec_documents_info', 'vec_documents_chunks', 'sqlite_sequence', 'vec_documents_rowids', 'vec_documents_vector_chunks00']
+documents rows     : 4
+vec_documents rows : 4
+VEC_OK
+[PASS] sqlite_vec - vec0 loaded, vec_documents present
+
+=== 6. CORS FROM THE DEV ORIGIN ===
+Origin http://localhost:3000 -> access-control-allow-origin: *
+[PASS] cors - dev server origin allowed
+
+=== 7. FRONTEND CONFIG ===
+[PASS] frontend_config - frontend/.env.local -> http://localhost:8000
+[PASS] frontend_deps - node_modules present on disk
+
+=== SUMMARY ===
+PASS: 8   FAIL: 0   SKIP: 0
+=== END ===
